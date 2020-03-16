@@ -1,7 +1,7 @@
-@import 'branding';
-@import 'custom';
-$font-body: 'Lato', 'Helvetica Neue', 'Helvetica', sans-serif;
-$font-header: 'Montserrat', 'Helvetica Neue', 'Helvetica', sans-serif;
+@import "branding";
+@import "custom";
+$font-body: "Lato", "Helvetica Neue", "Helvetica", sans-serif;
+$font-header: "Montserrat", "Helvetica Neue", "Helvetica", sans-serif;
 
 // Login screen variables
 $login-bg-color: $secondary;
@@ -9,7 +9,7 @@ $login-color: $primary;
 $register-color: $tertiary;
 
 $status-unverified-color: rgb(82, 82, 82);
-$status-incomplete-color: #F5F5F5;
+$status-incomplete-color: #f5f5f5;
 $status-submitted-color: lighten($secondary, 20%);
 $status-admitted-color: $primary;
 $status-confirmed-color: $secondary;
@@ -21,7 +21,7 @@ $status-rejected-color: red; // Not used
 // Sidebar variables
 $sidebar-color: $primary;
 $sidebar-width: 265px;
-$sidebar-transition-time: .5s;
+$sidebar-transition-time: 0.5s;
 $sidebar-tab-size: 55px;
 
 // Page variables
@@ -33,7 +33,7 @@ $brand-tertiary: $tertiary;
 
 @mixin transform($transforms) {
   -webkit-transform: $transforms;
-          transform: $transforms;
+  transform: $transforms;
 }
 
 @mixin transition-duration($duration) {
@@ -41,17 +41,17 @@ $brand-tertiary: $tertiary;
   transition-duration: $duration;
 }
 
-@import 'home';
+@import "home";
 
-@import 'login';
-@import 'base';
-@import 'sidebar';
-@import 'page';
-@import 'dashboard';
-@import 'application';
-@import 'verify';
-@import 'team';
-@import 'admin';
+@import "login";
+@import "base";
+@import "sidebar";
+@import "page";
+@import "dashboard";
+@import "application";
+@import "verify";
+@import "team";
+@import "admin";
 
 html,
 body {
@@ -62,7 +62,7 @@ body {
 
 body {
   margin: 0;
-  font-family: 'Lato', 'Helvetica Neue', 'Helvetica', sans-serif;
+  font-family: "Lato", "Helvetica Neue", "Helvetica", sans-serif;
   font-weight: 300;
 
   > .container {
@@ -122,20 +122,25 @@ fieldset {
   border: none;
 }
 
-.ui.search >.results {
+.ui.search > .results {
   width: 100%;
 }
 // @import 'animation';
 
 .challenge_Description {
   width: 100%;
-  
 }
 .challenge_Description .summary {
   height: 115px;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
-.ui.grid{
+.ui.grid {
   margin-bottom: 0rem;
+}
+
+.dropzone {
+  border: 2px dashed $primary;
+  border-radius: 5px;
+  background: white;
 }

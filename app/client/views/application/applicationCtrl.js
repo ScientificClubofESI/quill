@@ -1,4 +1,13 @@
 angular.module('reg')
+  .config(function (dropzoneOpsProvider) {
+    dropzoneOpsProvider.setOptions({
+      url: 'https://cse.club/api/uploadCV',
+      maxFilesize: '2',
+      maxFiles : 1,
+      paramName: 'cv',
+      acceptedFiles: 'application/pdf',
+    })
+  })
   .controller('ApplicationCtrl', [
     '$scope',
     '$rootScope',
@@ -11,6 +20,15 @@ angular.module('reg')
     'MarketingService',
     function ($scope, $rootScope, $state, $http, currentUser, settings, Session, UserService, MarketingService) {
 
+      $scope.dzCallbacks = {
+        'addedfile': function (file) {
+          console.log(file);
+          $scope.newFile = file;
+        },
+        'success': function (file, xhr) {
+          $scope.user.profile.cvLink = xhr.link ;
+        },
+      }
       // Set up the user
       $scope.user = currentUser.data;
 
@@ -166,20 +184,22 @@ angular.module('reg')
         if ($scope.UserSource != '2') { $scope.user.profile.source = $scope.UserSource }
         else { $scope.user.profile.source = $scope.UserSource + "#" + $scope.club }
 
-        UserService.uploadCV(angular.element(document.querySelector('#cv'))[0].files).then(response => {
-          console.log(response);
-          $scope.user.profile.cvLink = response.data.link;
-          UserService
-            .updateProfile(Session.getUserId(), $scope.user.profile)
-            .then(response => {
-              swal("Awesome!", "Your application has been saved.", "success").then(value => {
-                if (sendMail) { sendMarketingEmails(); }
-                $state.go("app.dashboard");
-              });
-            }, response => {
-              swal("Uh oh!", "Something went wrong.", "error");
+        // UserService.uploadCV(angular.element(document.querySelector('#cv'))[0].files).then(response => {
+        //   console.log(response);
+        //   $scope.user.profile.cvLink = response.data.link;
+
+        // })
+
+        UserService
+          .updateProfile(Session.getUserId(), $scope.user.profile)
+          .then(response => {
+            swal("Awesome!", "Your application has been saved.", "success").then(value => {
+              if (sendMail) { sendMarketingEmails(); }
+              $state.go("app.dashboard");
             });
-        })
+          }, response => {
+            swal("Uh oh!", "Something went wrong.", "error");
+          });
 
       }
 

@@ -1,6 +1,7 @@
 var app = angular.module('reg', [
   'ui.router',
   'chart.js',
+  'thatisuday.dropzone'
 ]);
 
 app
