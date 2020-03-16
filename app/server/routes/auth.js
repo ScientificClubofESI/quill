@@ -1,9 +1,9 @@
-var _         = require('underscore');
+var _ = require('underscore');
 
 var SettingsController = require('../controllers/SettingsController');
 var UserController = require('../controllers/UserController');
 
-module.exports = function(router){
+module.exports = function (router) {
 
   // ---------------------------------------------
   // AUTHENTICATION
@@ -23,14 +23,14 @@ module.exports = function(router){
    *
    */
   router.post('/login',
-    function(req, res, next){
+    function (req, res, next) {
       var email = req.body.email;
       var password = req.body.password;
       var token = req.body.token;
 
       if (token) {
         UserController.loginWithToken(token,
-          function(err, token, user){
+          function (err, token, user) {
             if (err || !user) {
               return res.status(400).send(err);
             }
@@ -41,7 +41,7 @@ module.exports = function(router){
           });
       } else {
         UserController.loginWithPassword(email, password,
-          function(err, token, user){
+          function (err, token, user) {
             if (err || !user) {
               return res.status(400).send(err);
             }
@@ -52,7 +52,7 @@ module.exports = function(router){
           });
       }
 
-  });
+    });
 
   /**
    * Register a user with a username (email) and password.
@@ -65,39 +65,39 @@ module.exports = function(router){
    *
    */
   router.post('/register',
-    function(req, res, next){
+    function (req, res, next) {
       // Register with an email and password
       var email = req.body.email;
       var password = req.body.password;
-      var volunteer=req.body.volunteer
-      if (!req.body.volunteer) {volunteer=false;} else {volunteer=true;}
-
+      var volunteer = req.body.volunteer
+      if (!req.body.volunteer) { volunteer = false; } else { volunteer = true; }
+      console.log(email + typeof email);
       UserController.createUser(email, password, volunteer,
-        function(err, user){
-          if (err){
+        function (err, user) {
+          if (err) {
             return res.status(400).send(err);
           }
-          if (volunteer) { UserController.sendPasswordResetEmail(email)}
+          if (volunteer) { UserController.sendPasswordResetEmail(email) }
           return res.json(user);
-      });
-  });
+        });
+    });
 
   router.post('/reset',
-    function(req, res, next){
+    function (req, res, next) {
       var email = req.body.email;
-      if (!email){
+      if (!email) {
         return res.status(400).send();
       }
 
-      UserController.sendPasswordResetEmail(email, function(err){
-        if(err){
+      UserController.sendPasswordResetEmail(email, function (err) {
+        if (err) {
           return res.status(400).send(err);
         }
         return res.json({
           message: 'Email Sent'
         });
       });
-  });
+    });
 
   /**
    * Reset user's password.
@@ -106,12 +106,12 @@ module.exports = function(router){
    *   password: STRING,
    * }
    */
-  router.post('/reset/password', function(req, res){
+  router.post('/reset/password', function (req, res) {
     var pass = req.body.password;
     var token = req.body.token;
 
-    UserController.resetPassword(token, pass, function(err, user){
-      if (err || !user){
+    UserController.resetPassword(token, pass, function (err, user) {
+      if (err || !user) {
         return res.status(400).send(err);
       }
       return res.json(user);
@@ -126,11 +126,11 @@ module.exports = function(router){
    * }
    */
   router.post('/verify/resend',
-    function(req, res, next){
+    function (req, res, next) {
       var id = req.body.id;
-      if (id){
-        UserController.sendVerificationEmailById(id, function(err, user){
-          if (err || !user){
+      if (id) {
+        UserController.sendVerificationEmailById(id, function (err, user) {
+          if (err || !user) {
             return res.status(400).send();
           }
           return res.status(200).send();
@@ -138,17 +138,17 @@ module.exports = function(router){
       } else {
         return res.status(400).send();
       }
-  });
+    });
 
   /**
    * Verify a user with a given token.
    */
-   router.get('/verify/:token',
-    function(req, res, next){
+  router.get('/verify/:token',
+    function (req, res, next) {
       var token = req.params.token;
-      UserController.verifyByToken(token, function(err, user){
+      UserController.verifyByToken(token, function (err, user) {
 
-        if (err || !user){
+        if (err || !user) {
           return res.status(400).send(err);
         }
 

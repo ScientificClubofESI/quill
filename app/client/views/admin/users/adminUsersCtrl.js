@@ -4,7 +4,7 @@ angular.module("reg").controller("AdminUsersCtrl", [
   "$stateParams",
   "UserService",
   'AuthService',
-  function($scope, $state, $stateParams, UserService, AuthService) {
+  function ($scope, $state, $stateParams, UserService, AuthService) {
     $scope.pages = [];
     $scope.users = [];
 
@@ -40,12 +40,12 @@ angular.module("reg").controller("AdminUsersCtrl", [
     }
 
     UserService.getPage($stateParams.page, $stateParams.size, $stateParams.query, $scope.statusFilters)
-    .then(response => {
+      .then(response => {
 
-      updatePage(response.data);
-    });
+        updatePage(response.data);
+      });
 
-    $scope.$watch("queryText", function(queryText) {
+    $scope.$watch("queryText", function (queryText) {
       UserService.getPage($stateParams.page, $stateParams.size, queryText, $scope.statusFilters).then(
         response => {
           updatePage(response.data);
@@ -56,21 +56,21 @@ angular.module("reg").controller("AdminUsersCtrl", [
 
     $scope.applyStatusFilter = function () {
       UserService
-        .getPage($stateParams.page, $stateParams.size, $scope.queryText, $scope.statusFilters,$scope.NotstatusFilters).then(
+        .getPage($stateParams.page, $stateParams.size, $scope.queryText, $scope.statusFilters, $scope.NotstatusFilters).then(
           response => {
             updatePage(response.data);
-        });
+          });
     };
 
 
-    $scope.goToPage = function(page) {
+    $scope.goToPage = function (page) {
       $state.go("app.admin.users", {
         page: page,
         size: $stateParams.size || 20
       });
     };
 
-    $scope.goUser = function($event, user) {
+    $scope.goUser = function ($event, user) {
       $event.stopPropagation();
 
       $state.go("app.admin.user", {
@@ -79,7 +79,7 @@ angular.module("reg").controller("AdminUsersCtrl", [
     };
 
 
-    $scope.acceptUser = function($event, user, index) {
+    $scope.acceptUser = function ($event, user, index) {
       $event.stopPropagation();
       swal({
         buttons: {
@@ -129,7 +129,7 @@ angular.module("reg").controller("AdminUsersCtrl", [
           if (!value) {
             return;
           }
-          
+
           UserService.softAdmittUser(user._id).then(response => {
             $scope.users[index] = response.data;
             swal(
@@ -145,7 +145,7 @@ angular.module("reg").controller("AdminUsersCtrl", [
 
 
 
-    $scope.rejecttUser = function($event, user, index) {
+    $scope.rejecttUser = function ($event, user, index) {
       $event.stopPropagation();
       swal({
         buttons: {
@@ -196,7 +196,7 @@ angular.module("reg").controller("AdminUsersCtrl", [
           if (!value) {
             return;
           }
-          
+
           UserService.softRejectUser(user._id).then(response => {
             $scope.users[index] = response.data;
             swal(
@@ -213,7 +213,7 @@ angular.module("reg").controller("AdminUsersCtrl", [
 
 
 
-    $scope.removeUser = function($event, user, index) {
+    $scope.removeUser = function ($event, user, index) {
       $event.stopPropagation();
 
 
@@ -280,7 +280,7 @@ angular.module("reg").controller("AdminUsersCtrl", [
       });
     };
 
-    $scope.sendAcceptanceEmails = function() {
+    $scope.sendAcceptanceEmails = function () {
       const filterSoftAccepted = $scope.users.filter(
         u => u.status.softAdmitted && !u.status.admitted
       );
@@ -291,7 +291,7 @@ angular.module("reg").controller("AdminUsersCtrl", [
         title: "Whoa, wait a minute!",
         text: `You're about to send acceptance emails (and accept) ${
           filterSoftAccepted.length
-        } user(s).`,
+          } user(s).`,
         icon: "warning",
         buttons: ["Cancel", "Yes, accept them and send the emails"],
         dangerMode: true
@@ -299,12 +299,12 @@ angular.module("reg").controller("AdminUsersCtrl", [
         if (willSend) {
           if (filterSoftAccepted.length) {
             filterSoftAccepted.forEach(user => {
-              UserService.admitUser(user._id); 
+              UserService.admitUser(user._id);
             });
             swal(
               "Sending!",
               `Accepting and sending emails to ${
-                filterSoftAccepted.length
+              filterSoftAccepted.length
               } users!`,
               "success"
             );
@@ -317,7 +317,7 @@ angular.module("reg").controller("AdminUsersCtrl", [
 
 
 
-    $scope.sendRejectionEmails = function() {
+    $scope.sendRejectionEmails = function () {
       const filterSoftRejected = $scope.users.filter(
         u => u.status.softRejected
       );
@@ -328,7 +328,7 @@ angular.module("reg").controller("AdminUsersCtrl", [
         title: "Whoa, wait a minute!",
         text: `You're about to send rejection emails (and reject) ${
           filterSoftRejected.length
-        } user(s).`,
+          } user(s).`,
         icon: "warning",
         buttons: ["Cancel", "Yes, reject them and send the emails"],
         dangerMode: true
@@ -336,12 +336,12 @@ angular.module("reg").controller("AdminUsersCtrl", [
         if (willSend) {
           if (filterSoftRejected.length) {
             filterSoftRejected.forEach(user => {
-              UserService.rejectUser(user._id); 
+              UserService.rejectUser(user._id);
             });
             swal(
               "Sending!",
               `Rejecting and sending emails to ${
-                filterSoftRejected.length
+              filterSoftRejected.length
               } users!`,
               "success"
             );
@@ -353,13 +353,13 @@ angular.module("reg").controller("AdminUsersCtrl", [
     };
 
 
-    $scope.exportUsers = function(){
-      var columns = ["N°", "Gender", "Full Name","School"];
+    $scope.exportUsers = function () {
+      var columns = ["N°", "Gender", "Full Name", "School"];
       var rows = [];
       UserService.getAll().then(users => {
-        var i=1;
+        var i = 1;
         users.data.forEach(user => {
-          rows.push([i++,user.profile.gender,user.profile.name,user.profile.school])
+          rows.push([i++, user.profile.gender, user.profile.name, user.profile.school])
         });
         var doc = new jsPDF('p', 'pt');
 
@@ -367,30 +367,30 @@ angular.module("reg").controller("AdminUsersCtrl", [
         var totalPagesExp = "{total_pages_count_string}";
 
         var pageContent = function (data) {
-            // HEADER
-            doc.setFontSize(20);
-            doc.setTextColor(40);
-            doc.setFontStyle('normal');
-            // if (base64Img) {
-            //     doc.addImage(base64Img, 'JPEG', data.settings.margin.left, 15, 10, 10);
-            // }
-            doc.text("Participants List", data.settings.margin.left + 15, 22);
-    
-            // FOOTER
-            var str = "Page " + data.pageCount;
-            // Total page number plugin only available in jspdf v1.0+
-            if (typeof doc.putTotalPages === 'function') {
-                str = str + " of " + totalPagesExp;
-            }
-            doc.setFontSize(10);
-            var pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
-            doc.text(str, data.settings.margin.left, pageHeight  - 10);
+          // HEADER
+          doc.setFontSize(20);
+          doc.setTextColor(40);
+          doc.setFontStyle('normal');
+          // if (base64Img) {
+          //     doc.addImage(base64Img, 'JPEG', data.settings.margin.left, 15, 10, 10);
+          // }
+          doc.text("Participants List", data.settings.margin.left + 15, 22);
+
+          // FOOTER
+          var str = "Page " + data.pageCount;
+          // Total page number plugin only available in jspdf v1.0+
+          if (typeof doc.putTotalPages === 'function') {
+            str = str + " of " + totalPagesExp;
+          }
+          doc.setFontSize(10);
+          var pageHeight = doc.internal.pageSize.height || doc.internal.pageSize.getHeight();
+          doc.text(str, data.settings.margin.left, pageHeight - 10);
         };
-        
+
         doc.autoTable(columns, rows, {
-            addPageContent: pageContent,
-            margin: {top: 30},
-            theme: 'grid'
+          addPageContent: pageContent,
+          margin: { top: 30 },
+          theme: 'grid'
         });
         if (typeof doc.putTotalPages === 'function') {
           doc.putTotalPages(totalPagesExp);
@@ -400,7 +400,7 @@ angular.module("reg").controller("AdminUsersCtrl", [
     }
 
 
-    $scope.toggleAdmin = function($event, user, index) {
+    $scope.toggleAdmin = function ($event, user, index) {
       $event.stopPropagation();
 
       if (!user.admin) {
@@ -434,19 +434,19 @@ angular.module("reg").controller("AdminUsersCtrl", [
           });
         });
       } else {
-        UserService.getAll().then(response=>{
+        UserService.getAll().then(response => {
           var count = 0;
           response.data.forEach(user => {
             if (user.admin) count++;
           });
-          if (count>1) {
+          if (count > 1) {
             UserService.removeAdmin(user._id).then(response => {
               $scope.users[index] = response.data;
               swal("Removed", response.data.profile.name + " as admin", "success");
               $state.reload();
             });
-          }else {
-            swal("No other Admin","You can't remove all admins.", "error");
+          } else {
+            swal("No other Admin", "You can't remove all admins.", "error");
           }
         })
 
@@ -459,7 +459,7 @@ angular.module("reg").controller("AdminUsersCtrl", [
       }
     }
 
-    $scope.rowClass = function(user) {
+    $scope.rowClass = function (user) {
       if (user.admin) {
         return "admin";
       }
@@ -558,7 +558,7 @@ angular.module("reg").controller("AdminUsersCtrl", [
               value: user.confirmation.hardware
             },
             {
-              name:"National Card ID",
+              name: "National Card ID",
               value: user.confirmation.nationalCardID
             }
           ]
@@ -580,18 +580,20 @@ angular.module("reg").controller("AdminUsersCtrl", [
       $state.reload();
     }
 
-    function onError(data){
+    function onError(data) {
       swal("Try again!", data.message, "error")
     }
 
-    $scope.addVolunteer = function(){
+    $scope.addVolunteer = function () {
 
-      swal("Write the challenge title:", {
-        buttons: {cancel: {text: "Cancel",value: null,visible: true}, yes: {text: "Invite",value: true,visible: true} },
-        content: {element: "input", attributes: {placeholder: "example@gmail.com",type: "text"} },
-      }).then((mail) => { if (!mail) {return;} 
+      swal("Write the volunteer email:", {
+        buttons: { cancel: { text: "Cancel", value: null, visible: true }, confirm: { text: "Invite", value: true, visible: true } },
+        content: { element: "input", attributes: { placeholder: "example@gmail.com", type: "text" } },
+      }).then((mail) => {
+        if (!mail) { return; }
         AuthService.register(
           mail, "hackathon", onSuccess, onError, true)
+        console.log('mailiillllll' + mail);
       });
     };
 

@@ -137,6 +137,7 @@ UserController.loginWithPassword = function(email, password, callback) {
  * @param  {Function} callback args(err, user)
  */
 UserController.createUser = function(email, password, volunteer, callback) {
+  console.log(typeof email);
   if (typeof email !== "string") {
     return callback({
       message: "Email must be a string."
