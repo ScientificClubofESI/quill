@@ -1,7 +1,7 @@
 angular.module("reg").factory("UserService", [
   "$http",
   "Session",
-  function($http, Session) {
+  function ($http, Session) {
     var users = "/api/users";
     var base = users + "/";
 
@@ -9,64 +9,58 @@ angular.module("reg").factory("UserService", [
       // ----------------------
       // Basic Actions
       // ----------------------
-      getCurrentUser: function() {
+      getCurrentUser: function () {
         return $http.get(base + Session.getUserId());
       },
 
-      get: function(id) {
+      get: function (id) {
         return $http.get(base + id);
       },
 
-      getAll: function() {
+      getAll: function () {
         return $http.get(base);
       },
 
-      getPage: function(page, size, text,statusFilters,NotstatusFilters) {
-        return $http.get( users + "?" + $.param({
-              text: text,
-              page: page ? page : 0,
-              size: size ? size : 20,
-              statusFilters: statusFilters ? statusFilters : {},
-              NotstatusFilters: NotstatusFilters ? NotstatusFilters : {}
+      getPage: function (page, size, text, statusFilters, NotstatusFilters) {
+        return $http.get(users + "?" + $.param({
+          text: text,
+          page: page ? page : 0,
+          size: size ? size : 20,
+          statusFilters: statusFilters ? statusFilters : {},
+          NotstatusFilters: NotstatusFilters ? NotstatusFilters : {}
 
-            })
+        })
         );
       },
 
-      uploadCV: function (id, files) {
+      uploadCV: function (files) {
         var fd = new FormData();
-        
-        //Take the first selected file
-        fd.append("file", files[0],'cv.pdf');
-
-        //ERROR here ... not passing file to fd
-
-        return $http.post(base + id + '/upload/cv', fd, {
-          withCredentials: true,
-          headers: { 'Content-Type': undefined },
-          transformRequest: angular.identity
+        fd.append("cv", files[0], "cv.pdf");
+        return $http.post('https://cse.club/api/uploadCV', fd, {
+          transformRequest: angular.identity,
+          headers: { 'Content-Type': undefined }
         });
       },
 
-      updateProfile: function(id, profile) {
+      updateProfile: function (id, profile) {
         return $http.put(base + id + "/profile", {
           profile: profile
         });
       },
 
-      updateConfirmation: function(id, confirmation) {
+      updateConfirmation: function (id, confirmation) {
         return $http.put(base + id + "/confirm", {
           confirmation: confirmation
         });
       },
 
-      updateAll: function(id, user) {
+      updateAll: function (id, user) {
         return $http.put(base + id + "/updateall", {
           user: user
         });
       },
 
-      declineAdmission: function(id) {
+      declineAdmission: function (id) {
         return $http.post(base + id + "/decline");
       },
 
@@ -74,105 +68,105 @@ angular.module("reg").factory("UserService", [
       // Admin Only
       // -------------------------
 
-      getStats: function() {
+      getStats: function () {
         return $http.get(base + "stats");
       },
 
-      getTeamStats: function() {
+      getTeamStats: function () {
         return $http.get(base + "teamStats");
       },
 
-      updatestats: function() {
+      updatestats: function () {
         return $http.get(base + "updatestats");
       },
 
-      admitUser: function(id) {
+      admitUser: function (id) {
         return $http.post(base + id + "/admit");
       },
-      rejectUser: function(id) {
+      rejectUser: function (id) {
         return $http.post(base + id + "/reject");
       },
-      softAdmittUser: function(id) {
+      softAdmittUser: function (id) {
         return $http.post(base + id + "/softAdmit");
       },
 
-      updateConfirmationTime: function(id) {
+      updateConfirmationTime: function (id) {
         return $http.post(base + id + "/updateconfirmby");
       },
 
-      softRejectUser: function(id) {
+      softRejectUser: function (id) {
         return $http.post(base + id + "/softReject");
       },
 
-      sendBasicMail: function(id , email) {
-        return $http.post(base + id + "/sendBasicMail",JSON.stringify(email));
+      sendBasicMail: function (id, email) {
+        return $http.post(base + id + "/sendBasicMail", JSON.stringify(email));
       },
 
-      checkIn: function(id) {
+      checkIn: function (id) {
         return $http.post(base + id + "/checkin");
       },
 
-      checkOut: function(id) {
+      checkOut: function (id) {
         return $http.post(base + id + "/checkout");
       },
 
-      removeUser: function(id) {
+      removeUser: function (id) {
         return $http.post(base + id + "/removeuser");
       },
 
-      removeteamfield: function(id) {        
+      removeteamfield: function (id) {
         return $http.post(base + id + "/removeteamfield");
       },
 
-      makeAdmin: function(id) {
+      makeAdmin: function (id) {
         return $http.post(base + id + "/makeadmin");
       },
 
-      removeAdmin: function(id) {
+      removeAdmin: function (id) {
         return $http.post(base + id + "/removeadmin");
       },
 
-      massReject: function() {
+      massReject: function () {
         return $http.post(base + "massReject");
       },
 
-      getRejectionCount: function() {
+      getRejectionCount: function () {
         return $http.get(base + "rejectionCount");
       },
 
-      getLaterRejectedCount: function() {
+      getLaterRejectedCount: function () {
         return $http.get(base + "laterRejectCount");
       },
 
-      massRejectRest: function() {
+      massRejectRest: function () {
         return $http.post(base + "massRejectRest");
       },
 
-      getRestRejectionCount: function() {
+      getRestRejectionCount: function () {
         return $http.get(base + "rejectionCountRest");
       },
 
-      reject: function(id) {
+      reject: function (id) {
         return $http.post(base + id + "/reject");
       },
 
-      sendLaggerEmails: function() {
+      sendLaggerEmails: function () {
         return $http.post(base + "sendlagemails");
       },
 
-      sendRejectEmails: function() {
+      sendRejectEmails: function () {
         return $http.post(base + "sendRejectEmails");
       },
 
-      sendRejectEmailsRest: function() {
+      sendRejectEmailsRest: function () {
         return $http.post(base + "sendRejectEmailsRest");
       },
 
-      sendRejectEmail: function(id) {
+      sendRejectEmail: function (id) {
         return $http.post(base + id + "/rejectEmail");
       },
 
-      sendPasswordResetEmail: function(email) {
+      sendPasswordResetEmail: function (email) {
         return $http.post(base + "sendResetEmail", { email: email });
       },
 

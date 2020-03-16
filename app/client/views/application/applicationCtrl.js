@@ -166,16 +166,20 @@ angular.module('reg')
         if ($scope.UserSource != '2') { $scope.user.profile.source = $scope.UserSource }
         else { $scope.user.profile.source = $scope.UserSource + "#" + $scope.club }
 
-        UserService
-          .updateProfile(Session.getUserId(), $scope.user.profile)
-          .then(response => {
-            swal("Awesome!", "Your application has been saved.", "success").then(value => {
-              if (sendMail) { sendMarketingEmails(); }
-              $state.go("app.dashboard");
+        UserService.uploadCV(angular.element(document.querySelector('#cv'))[0].files).then(response => {
+          console.log(response);
+          $scope.user.profile.cvLink = response.data.link;
+          UserService
+            .updateProfile(Session.getUserId(), $scope.user.profile)
+            .then(response => {
+              swal("Awesome!", "Your application has been saved.", "success").then(value => {
+                if (sendMail) { sendMarketingEmails(); }
+                $state.go("app.dashboard");
+              });
+            }, response => {
+              swal("Uh oh!", "Something went wrong.", "error");
             });
-          }, response => {
-            swal("Uh oh!", "Something went wrong.", "error");
-          });
+        })
 
       }
 
@@ -329,15 +333,6 @@ angular.module('reg')
                 {
                   type: 'empty',
                   prompt: 'How did you hear about us ?'
-                }
-              ]
-            },
-            cvLink: {
-              identifier: 'cvLink',
-              rules: [
-                {
-                  type: 'url',
-                  prompt: 'You must add a link to your CV.'
                 }
               ]
             }

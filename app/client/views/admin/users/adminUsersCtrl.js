@@ -539,22 +539,6 @@ angular.module("reg").controller("AdminUsersCtrl", [
               name: "Major",
               value: user.profile.major
             },
-            {
-              name: "Github",
-              value: user.profile.github
-            },
-            {
-              name: "Facebook",
-              value: user.profile.facebook
-            },
-            {
-              name: "Linkedin",
-              value: user.profile.linkedin
-            },
-            {
-              name:"CV link",
-              value: user.profile.cvLink
-            },
           ]
         },
         {
