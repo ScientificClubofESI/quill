@@ -136,54 +136,6 @@
               </div>
         </div>
 
-
-
-        <div class="field">
-          <label>
-              * What would you like to learn or get out of HackIT?
-          </label>
-          <textarea name="essay" ng-model="user.profile.essay">
-          </textarea>
-        </div>
-
-        <br>
-
-        <div class="divided title"> Skills & Accomplishments </div>
-
-        <div class="field">
-          <label>* Skill Sheet PDF Only</label>
-          <p>
-            Upload a document outlining any skills or experience you'd like to share (ex. resume). PDF Only!
-          </p>
-          <input id="cv" type="file" class="ui pink button" accept="application/pdf" name="file"/>
-
-        </div>
-
-        <div class="field">
-          <label>* Github </label>
-          <input type="text"
-                 name="github"
-                 placeholder="https://github.com/foobar"
-                 ng-model="user.profile.github">
-        </div>
-
-        <div class="field">
-          <label>* Facebook </label>
-          <input type="text"
-                 name="facebook"
-                 placeholder="https://facebook.com/foobar"
-                 ng-model="user.profile.facebook">
-        </div>
-
-        <div class="field">
-          <label>* Linkedin </label>
-          <input type="text"
-                 name="linkedin"
-                 placeholder="https://linkedin.com/in/foobar"
-                 ng-model="user.profile.linkedin">
-        </div>
-
-
         <div class="ui grid">
             <div class="eight wide column">
                 <div class="field">
@@ -215,8 +167,54 @@
             </div>
   
         </div>
-          
 
+        <div class="field">
+          <label>
+              * What would you like to learn or get out of HackIT?
+          </label>
+          <textarea name="essay" ng-model="user.profile.essay">
+          </textarea>
+        </div>
+
+        <br>
+
+        <div class="divided title"> Skills & Accomplishments </div>
+
+        <div class="field">
+          <label>* Github </label>
+          <input type="text"
+                 name="github"
+                 placeholder="https://github.com/foobar"
+                 ng-model="user.profile.github">
+        </div>
+
+        <div class="field">
+          <label>* Facebook </label>
+          <input type="text"
+                 name="facebook"
+                 placeholder="https://facebook.com/foobar"
+                 ng-model="user.profile.facebook">
+        </div>
+
+        <div class="field">
+          <label>* Linkedin </label>
+          <input type="text"
+                 name="linkedin"
+                 placeholder="https://linkedin.com/in/foobar"
+                 ng-model="user.profile.linkedin">
+        </div>
+
+        <div class="field">
+            <label>* Skill Sheet PDF Only</label>
+            <p>
+              Upload a document outlining any skills or experience you'd like to share (ex. resume). PDF Only!
+            </p>
+            <ng-dropzone class="dropzone" options="dzOptions" callbacks="dzCallbacks" methods="dzMethods"></ng-dropzone>
+  
+            <!-- <input id="cv" type="file" class="ui pink button" accept="application/pdf" name="file"/> -->
+  
+          </div>
+          
 
 
         <div class="field" ng-hide="regIsClosed">
