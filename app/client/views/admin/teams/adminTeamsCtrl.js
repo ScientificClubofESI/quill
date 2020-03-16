@@ -77,7 +77,6 @@ angular.module('reg')
     }
 
     TeamService.getAll().then(teams => {
-      console.log(teams.data);
 
       $scope.isTeamAdmin = false;
       $scope.isTeamMember = false;
@@ -578,8 +577,16 @@ angular.module('reg')
       );
     };
 
-
-
-
+    $scope.acceptTeam = function (team) {
+      team.members.forEach(user => {
+        UserService.softAdmittUser(user.id);
+      }).then(e=>{
+        swal(
+          "Done",
+          "All users softAccepted.",
+          "success"
+        );  
+      })
+    }
 
   }]);

@@ -593,7 +593,6 @@ angular.module("reg").controller("AdminUsersCtrl", [
         if (!mail) { return; }
         AuthService.register(
           mail, "hackathon", onSuccess, onError, true)
-        console.log('mailiillllll' + mail);
       });
     };
 
