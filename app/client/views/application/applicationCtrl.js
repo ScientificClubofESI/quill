@@ -1,6 +1,7 @@
 angular.module('reg')
   .config(function (dropzoneOpsProvider) {
     dropzoneOpsProvider.setOptions({
+      addRemoveLinks: true,
       url: 'https://cse.club/api/uploadCV',
       maxFilesize: '2',
       maxFiles : 1,
