@@ -64,6 +64,10 @@ var schema = new mongoose.Schema({
     type: Boolean,
     required: true,
     default: false,
+  },
+  isAccepted: {
+    type: Boolean,
+    default: false,
   }
 });
 

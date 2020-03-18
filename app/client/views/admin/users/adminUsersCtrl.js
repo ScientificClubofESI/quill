@@ -283,7 +283,15 @@ angular.module("reg").controller("AdminUsersCtrl", [
     $scope.sendAcceptanceEmails = function () {
       const filterSoftAccepted = $scope.users.filter(
         u => u.status.softAdmitted && !u.status.admitted
-      );
+      ); 
+
+      // **** accept all teams and then accept Users that are SoftAccepted ****
+
+      // Get accepted teams
+
+      // Foreach push members to filterSoftAccepted
+
+      // remove duplicates from filterSoftAccepted
 
       var message = $(this).data("confirm");
 
@@ -585,7 +593,6 @@ angular.module("reg").controller("AdminUsersCtrl", [
     }
 
     $scope.addVolunteer = function () {
-
       swal("Write the volunteer email:", {
         buttons: { cancel: { text: "Cancel", value: null, visible: true }, confirm: { text: "Invite", value: true, visible: true } },
         content: { element: "input", attributes: { placeholder: "example@gmail.com", type: "text" } },

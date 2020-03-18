@@ -578,9 +578,17 @@ angular.module('reg')
     };
 
     $scope.acceptTeam = function (team) {
-      team.members.forEach(user => {
-        UserService.softAdmittUser(user.id);
-      }).then(e=>{
+        TeamService.acceptTeam(team.id).then(e=>{
+        swal(
+          "Done",
+          "All users softAccepted.",
+          "success"
+        );  
+      })
+    }
+    
+    $scope.rejectTeam = function (team) {
+      TeamService.acceptTeam(team.id).then(e=>{
         swal(
           "Done",
           "All users softAccepted.",

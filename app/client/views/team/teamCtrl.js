@@ -276,6 +276,7 @@ angular.module('reg')
               );
             } else {
               TeamService.removejoin(teamID, index, false).then(response2 => {
+                TeamService.resetTeamReview(team._id)
                 swal(
                   "Accepted",
                   member.name + " has been accepted to your team.",
@@ -356,6 +357,7 @@ angular.module('reg')
                 "error"
               );
             } else {
+              TeamService.resetTeamReview(team._id)
               TeamService.removejoin(teamID, index, false).then(response2 => {
                 swal(
                   "Removed",
@@ -450,6 +452,7 @@ angular.module('reg')
           team.members.forEach(member => {
             if (member.id == currentUser.data._id) {
               TeamService.removemember(team._id, index).then(response => {
+                TeamService.resetTeamReview(team._id)
                 swal(
                   "Removed",
                   "You have successfully left this team. Please find another team or create your own.",

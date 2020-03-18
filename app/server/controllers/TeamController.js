@@ -348,6 +348,58 @@ TeamController.removeTeam = function(id, callback) {
   );
 };
 
+TeamController.acceptTeam = function(id, callback) {
+  Team.findOneAndUpdate(
+    {
+      _id: id,
+    },
+    {
+      $set: {
+        isAccepted: true
+      }
+    },
+    {
+      new: true
+    },
+    callback
+  );
+};
+
+TeamController.rejectTeam = function(id, callback) {
+  Team.findOneAndUpdate(
+    {
+      _id: id,
+    },
+    {
+      $set: {
+        isAccepted: false
+      }
+    },
+    {
+      new: true
+    },
+    callback
+  );
+};
+
+TeamController.resetTeamReview = function(id, callback) {
+  Team.findOneAndUpdate(
+    {
+      _id: id,
+    },
+    {
+      $unset: {
+        isAccepted: 1
+      }
+    },
+    {
+      new: true
+    },
+    callback
+  );
+};
+
+
 
 TeamController.toggleCloseTeam = function(id, isColosed, callback) {
   Team.findOneAndUpdate(

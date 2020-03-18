@@ -112,7 +112,18 @@ angular.module('reg').factory("TeamService", [
               })
           );
         }, 
+
+        acceptTeam : function (id) {
+          return $http.post(base + id + "/accept");
+        },
   
+        rejectTeam : function (id) {
+          return $http.post(base + id + "/reject");
+        },
+
+        resetTeamReview : function (id) {
+          return $http.post(base + id + "/resetteamreview");
+        },
 
 
       };

@@ -865,6 +865,31 @@ router.get("/users/:id/workshop/:workshopN", function(req, res) {
     TeamController.removeTeam(id, defaultResponse(req, res));
   });
 
+
+    /**
+   * PUT - Accept team
+   */
+  router.post("/teams/:id/accept", isAdmin, function(req, res) {
+    var id = req.params.id;
+    TeamController.acceptTeam(id, defaultResponse(req, res));
+  });
+
+  /**
+   * PUT - Reject team
+   */
+  router.post("/teams/:id/reject", isAdmin, function(req, res) {
+    var id = req.params.id;
+    TeamController.rejectTeam(id, defaultResponse(req, res));
+  });
+  
+  /**
+   * PUT - Reset team review
+   */
+  router.post("/teams/:id/resetteamreview", isAdmin, function(req, res) {
+    var id = req.params.id;
+    TeamController.resetTeamReview(id, defaultResponse(req, res));
+  });
+
   /**
    * PUT - Update closed team Statuss
    */
